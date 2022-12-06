@@ -5,6 +5,7 @@
 
   /** @type {import('./$types').PageData} */
   export let data;
+  $: ({ user } = data);
 
 	if (browser) {
     (async () => {
@@ -12,13 +13,13 @@
       const data = await res.json();
       console.log('fetch with cache reload', data);
       await invalidateAll();
-      console.log('invalidated');
+      console.log('invalidated', user);
     })();
   }
 </script>
 
 <form method="POST" use:enhance>
-  <input name=name bind:value={data.user.name}>
+  <input name=name bind:value={user.name}>
   <button> Submit </button>
 </form>
 
