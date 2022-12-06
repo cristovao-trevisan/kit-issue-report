@@ -6,7 +6,15 @@
   /** @type {import('./$types').PageData} */
   export let data;
 
-	if (browser) invalidateAll();
+	if (browser) {
+    (async () => {
+      const res = await fetch('/', { cache: 'reload' });
+      const data = await res.json();
+      console.log('fetch with cache reload', data);
+      await invalidateAll();
+      console.log('invalidated');
+    })();
+  }
 </script>
 
 <form method="POST" use:enhance>
